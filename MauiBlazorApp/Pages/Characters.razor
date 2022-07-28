@@ -1,0 +1,32 @@
+﻿@page "/Characters"
+
+@using MauiBlazorApp.Models
+@using MauiBlazorApp.Services
+@inject ICharacterService service
+
+<h3>Characters</h3>
+
+@if (_model == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach (var item in _model.results)
+    {
+        <div>
+            <h5>@item.name</h5>
+            <img src="@item.image">
+        </div>
+    }
+}
+
+
+@code {
+    private CharactersModel _model;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _model = await service.Get();
+    }
+}
